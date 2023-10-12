@@ -11,7 +11,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 20%;
 }
 
+
+/*Margem*/
+.m-20p{
+  margin: 20px;
+}
+
+
 /*Margem a Esquerda*/
 .ml-15p{
   margin-left: 15px;
+}
+
+
+/*Margem a Direita*/
+.mr-10p{
+  margin-right: 10px !important;
 }
