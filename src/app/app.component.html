@@ -1,4 +1,28 @@
-<app-header></app-header>
-<h1>{{title}}</h1>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+
+
+<div class="main-container">
+  <app-header [sidenav]="sidenav"></app-header>
+
+  <mat-sidenav-container>
+
+    <mat-sidenav #sidenav class="w-20p">
+      <mat-list>
+        <mat-list-item (click)="sidenav.toggle()">
+          <span matListItemIcon><mat-icon>home</mat-icon></span>
+          <span matListItemTitle>Home</span>
+        </mat-list-item>
+      </mat-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <h1>Teste</h1>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
+  <app-footer></app-footer>
+</div>
+
+
+

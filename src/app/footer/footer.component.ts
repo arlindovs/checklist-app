@@ -10,7 +10,7 @@ export class FooterComponent implements OnInit {
   constructor() {
   }
 
-  public copywrite = 'Arlindo © 2023. Todos os direitos reservados.';
+  public copywrite = 'AVSJ © 2023. Todos os direitos reservados.';
 
   ngOnInit(): void {
   }
