@@ -28,3 +28,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mr-10p{
   margin-right: 10px !important;
 }
+
+
+/*Flex*/
+.flx-center-row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flx-evly{
+  justify-content: space-evenly;
+}
