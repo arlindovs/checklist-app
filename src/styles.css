@@ -13,9 +13,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 /*Margem*/
-.m-20p{
+.w-20p{
   margin: 20px;
 }
+.w-100p{
+  margin: 100px;
+}
+.w-300p{
+  margin: 300px;
+}
+.w-600p {
+  margin: 600px;
+ }
 
 
 /*Margem a Esquerda*/
@@ -25,7 +34,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 /*Margem a Direita*/
-.mr-10p{
+.mr-10{
   margin-right: 10px !important;
 }
 
@@ -36,7 +45,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   flex-direction: row;
   align-items: center;
 }
-
 .flx-evly{
   justify-content: space-evenly;
 }
