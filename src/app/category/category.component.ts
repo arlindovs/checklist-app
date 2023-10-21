@@ -18,11 +18,13 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {}
 
   public editCategory(inputCategory: Category) {
+    console.log('edit category clik');
+
     this.dialog
       .open(CategoryEditComponent, {
         disableClose: true,
         data: {
-          editableCategory: inputCategory
+          editableCategory: inputCategory,
         },
       })
       .afterClosed()

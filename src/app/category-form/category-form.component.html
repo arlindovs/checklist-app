@@ -6,12 +6,13 @@
     </mat-card-header>
 
     <mat-card-content>
-      <form [formGroup]="categoryForm" #categoryFormDirective="ngForm">
+      <form [formGroup]="categoryForm" #categoryFormDirective="ngForm" *ngIf="isFormReady">
 
         <div style="display: flex; flex-direction: colum;">
-        <mat-form-field>
+        <mat-form-field class="w-100p">
           <mat-label>Nome</mat-label>
-          <input matInput type="text" formControlName="name">
+          <input matInput type="text" formControlName="name" required>
+          <mat-error *ngIf="categoryForm?.controls?.['name']">Nome Obrigatorio!</mat-error>
         </mat-form-field>
         </div>
 
