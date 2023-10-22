@@ -57,16 +57,15 @@ export class CategoryComponent implements OnInit {
     console.log('Cliquei em Novo!');
 
     this.dialog
-    .open(CategoryEditComponent, {
-      disableClose: true,
-      data: {
-        actionName: 'Criar',
-      },
-    })
-    .afterClosed()
-    .subscribe((resp) => {
-      console.log('Modal Criar Fechada!');
-    });
-
+      .open(CategoryEditComponent, {
+        disableClose: true,
+        data: {
+          actionName: 'Criar',
+        },
+      })
+      .afterClosed()
+      .subscribe((resp) => {
+        console.log('Modal Criar Fechada!');
+      });
   }
 }

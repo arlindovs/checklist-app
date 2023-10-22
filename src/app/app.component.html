@@ -24,6 +24,15 @@
 
         <mat-divider></mat-divider>
 
+        <mat-list-item (click)="sidenav.toggle()">
+          <span matListItemIcon><mat-icon>checklist</mat-icon></span>
+          <span matListItemTitle>
+            <a [routerLink]="['checklist']">Checklist</a>
+          </span>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
       </mat-list>
     </mat-sidenav>
 
@@ -35,6 +44,3 @@
 
   <app-footer></app-footer>
 </div>
-
-
-

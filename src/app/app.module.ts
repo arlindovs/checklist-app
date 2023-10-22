@@ -14,6 +14,7 @@ import { CategoryComponent } from './category/category.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
+import { ChecklistComponent } from './checklist/checklist.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CategoryFormComponent } from './category-form/category-form.component';
     DialogComponent,
     CategoryEditComponent,
     CategoryFormComponent,
+    ChecklistComponent,
   ],
   imports: [
     BrowserModule,
