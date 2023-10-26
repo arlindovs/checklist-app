@@ -2,6 +2,7 @@ import { DialogComponent } from './../dialog/dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { CHECKLIST_DATA, ChecklistItem } from '../_models/checklistItem';
 import { MatDialog } from '@angular/material/dialog';
+import { ChecklistEditComponent } from '../checklist-edit/checklist-edit.component';
 
 @Component({
   selector: 'app-checklist',
@@ -31,10 +32,30 @@ export class ChecklistComponent implements OnInit {
 
   public createNewItem() {
     console.log('Criar novo item clicado!');
+
+    this.dialog
+      .open(ChecklistEditComponent, {
+        disableClose: true,
+        data: { actionName: 'Criar' },
+      })
+      .afterClosed()
+      .subscribe((resp) => {
+        console.log('Fechando model Criação');
+      });
   }
 
-  public updateChecklistItem(checklist: ChecklistItem) {
+  public updateChecklistItem(checklistItem: ChecklistItem) {
     console.log('atualizado item do checklist!');
+
+    this.dialog
+      .open(ChecklistEditComponent, {
+        disableClose: true,
+        data: { updateChecklistItem: checklistItem, actionName: 'Editar' },
+      })
+      .afterClosed()
+      .subscribe((resp) => {
+        console.log('Fechando model edição');
+      });
   }
 
   public deleteChecklistItem(checklist: ChecklistItem) {
