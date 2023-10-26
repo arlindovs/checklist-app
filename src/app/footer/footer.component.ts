@@ -7,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
+
   constructor() {
   }
 
   public copywrite = 'AVSJ © 2023. Todos os direitos reservados.';
+
+  public currentYear: number = new Date().getFullYear();
 
   ngOnInit(): void {
   }
