@@ -12,7 +12,7 @@ export class CategoryFormComponent implements OnInit {
   @Input() public actionName = 'Editar Categoria';
   public categoryForm!: FormGroup;
 
-  @Output() closeModelEventEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() closeModalEventEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input() public editableCategory!: Category;
 
@@ -31,11 +31,11 @@ export class CategoryFormComponent implements OnInit {
 
   public cancel() {
     console.log('Cancelar Clicado!');
-    this.closeModelEventEmitter.emit(false);
+    this.closeModalEventEmitter.emit(false);
   }
 
   public save() {
     console.log('Salvar Clicado!');
-    this.closeModelEventEmitter.emit(true);
+    this.closeModalEventEmitter.emit(true);
   }
 }

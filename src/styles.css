@@ -14,6 +14,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
 }
 
+.w-500p{
+  width: 500px;
+}
+
 
 /*Margem*/
 .w-10p{
@@ -41,7 +45,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /*Margem a Direita*/
 .mr-10{
-  margin-right: 10px !important;
+  margin-right: 10px;
 }
 
 
@@ -51,6 +55,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   flex-direction: row;
   align-items: center;
 }
+
+.flx-row{
+  display: flex;
+  flex-direction: row;
+}
 .flx-evly{
   justify-content: space-evenly;
+}
+
+.flx-clmn{
+  display: flex;
+  flex-direction: column;
 }
