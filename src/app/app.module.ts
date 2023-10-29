@@ -1,4 +1,3 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +16,13 @@ import { CategoryFormComponent } from './category-form/category-form.component';
 import { ChecklistComponent } from './checklist/checklist.component';
 import { ChecklistEditComponent } from './checklist-edit/checklist-edit.component';
 import { ChecklistFormComponent } from './checklist-form/checklist-form.component';
+
+//configurar localização bt-BR
+import { LOCALE_ID, NgModule } from '@angular/core';
+import localePt from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localePt)
+
 
 @NgModule({
   declarations: [
@@ -41,7 +47,9 @@ import { ChecklistFormComponent } from './checklist-form/checklist-form.componen
     MaterialModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'pt-BR'}
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
