@@ -1,0 +1,13 @@
+.home-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.home-title {
+  font-size: 30px !important;
+  font-weight: bold;
+  color: rgb(74, 112, 216);
+}
