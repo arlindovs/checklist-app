@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CATEGORY_DATA, Category } from '../_models/category';
+import { Category } from '../_models/category';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
+import { CategoryService } from '../service/category.service';
 
 @Component({
   selector: 'app-category',
@@ -11,11 +12,18 @@ import { CategoryEditComponent } from '../category-edit/category-edit.component'
 })
 export class CategoryComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'name', 'actions'];
-  public dataSource: Category[] = CATEGORY_DATA;
+  public dataSource: Category[] = [];
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private categoryService: CategoryService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.categoryService.getAllCaregories().subscribe((resp: Category[]) => {
+      this.dataSource = resp;
+    });
+  }
 
   public editCategory(inputCategory: Category) {
     console.log('edit category clik');

@@ -1,8 +1,9 @@
 import { DialogComponent } from './../dialog/dialog.component';
 import { Component, OnInit } from '@angular/core';
-import { CHECKLIST_DATA, ChecklistItem } from '../_models/checklistItem';
+import { ChecklistItem } from '../_models/checklistItem';
 import { MatDialog } from '@angular/material/dialog';
 import { ChecklistEditComponent } from '../checklist-edit/checklist-edit.component';
+import { ChecklistService } from '../service/ChecklistService';
 
 @Component({
   selector: 'app-checklist',
@@ -20,11 +21,15 @@ export class ChecklistComponent implements OnInit {
     'actions',
   ];
 
-  public dataSource = CHECKLIST_DATA;
+  public dataSource: ChecklistItem[] = [];
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private checklistService: ChecklistService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.checklistService.getAllChecklist().subscribe((resp: ChecklistItem[]) => {
+      this.dataSource = resp;
+    });
+  }
 
   public updateCompleteStatus(status: boolean) {
     console.log('Status criado', status);
