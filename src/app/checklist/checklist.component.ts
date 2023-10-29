@@ -4,6 +4,7 @@ import { ChecklistItem } from '../_models/checklistItem';
 import { MatDialog } from '@angular/material/dialog';
 import { ChecklistEditComponent } from '../checklist-edit/checklist-edit.component';
 import { ChecklistService } from '../service/ChecklistService';
+import { SnackBarService } from '../service/snack-bar.service';
 
 @Component({
   selector: 'app-checklist',
@@ -23,12 +24,18 @@ export class ChecklistComponent implements OnInit {
 
   public dataSource: ChecklistItem[] = [];
 
-  constructor(private dialog: MatDialog, private checklistService: ChecklistService) {}
+  constructor(
+    private dialog: MatDialog,
+    private checklistService: ChecklistService,
+    private snackBarService: SnackBarService
+  ) {}
 
   ngOnInit(): void {
-    this.checklistService.getAllChecklist().subscribe((resp: ChecklistItem[]) => {
-      this.dataSource = resp;
-    });
+    this.checklistService
+      .getAllChecklist()
+      .subscribe((resp: ChecklistItem[]) => {
+        this.dataSource = resp;
+      });
   }
 
   public updateCompleteStatus(status: boolean) {
@@ -45,7 +52,11 @@ export class ChecklistComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Fechando model Criação');
+        if (resp) {
+          this.snackBarService.showSnackBar('Item Criado com sucesso!', 'OK');
+        } else {
+          this.snackBarService.showSnackBar('Existe erro ao Criar!', 'OK');
+        }
       });
   }
 
@@ -59,7 +70,11 @@ export class ChecklistComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Fechando model edição');
+        if (resp) {
+          this.snackBarService.showSnackBar('Item Editado com sucesso!', 'OK');
+        } else {
+          this.snackBarService.showSnackBar('Existe erro ao Editar!', 'OK');
+        }
       });
   }
 
@@ -77,7 +92,11 @@ export class ChecklistComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Janela model confirmar apagar fechada');
+        if (resp) {
+          this.snackBarService.showSnackBar('Item Apagado com sucesso!', 'OK');
+        } else {
+          this.snackBarService.showSnackBar('Existe erro ao Apagar!', 'OK');
+        }
       });
   }
 }

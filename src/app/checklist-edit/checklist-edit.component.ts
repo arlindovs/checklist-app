@@ -26,6 +26,6 @@ export class ChecklistEditComponent implements OnInit {
   ngOnInit(): void {}
 
   public onFormClose($event: any) {
-    this.modalRef.close();
+    if($event != null) this.modalRef.close($event);
   }
 }

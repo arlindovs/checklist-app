@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ChecklistItem } from '../_models/checklistItem';
-import { Category } from '../_models/category';
 
 export const CHECKLIST_DATA = [
   {

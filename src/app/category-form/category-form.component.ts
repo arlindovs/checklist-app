@@ -1,5 +1,10 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Category } from '../_models/category';
 
 @Component({
@@ -8,23 +13,24 @@ import { Category } from '../_models/category';
   styleUrls: ['./category-form.component.css'],
 })
 export class CategoryFormComponent implements OnInit {
-
   @Input() public actionName = 'Editar Categoria';
   public categoryForm!: FormGroup;
 
-  @Output() closeModalEventEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() public closeModalEventEmitter: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
   @Input() public editableCategory!: Category;
 
   public isFormReady = true;
 
-
-  constructor(private formBuilder: FormBuilder) {
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.categoryForm = this.formBuilder.group({
-      name: [this.editableCategory != null ? this.editableCategory.name : '', Validators.required]
+      name: [
+        this.editableCategory != null ? this.editableCategory.name : '',
+        Validators.required,
+      ],
     });
     this.isFormReady = true;
   }

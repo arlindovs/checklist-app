@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
 import { CategoryService } from '../service/category.service';
+import { SnackBarService } from '../service/snack-bar.service';
 
 @Component({
   selector: 'app-category',
@@ -16,7 +17,8 @@ export class CategoryComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private snackBarService: SnackBarService,
   ) {}
 
   ngOnInit(): void {
@@ -37,10 +39,18 @@ export class CategoryComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Modal Editar Fechada!');
+        if (resp) {
+          this.snackBarService.showSnackBar('Categoria Alterada com sucesso!', 'OK');
+        } else {
+          this.snackBarService.showSnackBar('Existe erro ao Alterar!', 'OK');
+        }
       });
   }
 
+  /**
+   * Deleta uma categoria após solicitar confirmação do usuário.
+   * @param category A categoria a ser deletada.
+   */
   public deleteCategory(category: Category) {
     this.dialog
       .open(DialogComponent, {
@@ -54,9 +64,9 @@ export class CategoryComponent implements OnInit {
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          console.log('Apagado com Sucesso!');
+          this.snackBarService.showSnackBar('Categoria Apagada com sucesso!', 'OK');
         } else {
-          console.log('Erro ao Apagar!');
+          this.snackBarService.showSnackBar('Existe erro ao Apagar!', 'OK');
         }
       });
   }
@@ -73,7 +83,11 @@ export class CategoryComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((resp) => {
-        console.log('Modal Criar Fechada!');
+        if (resp) {
+          this.snackBarService.showSnackBar('Categoria Criada com sucesso!', 'OK');
+        } else {
+          this.snackBarService.showSnackBar('Existe erro ao Criar!', 'OK');
+        }
       });
   }
 }
