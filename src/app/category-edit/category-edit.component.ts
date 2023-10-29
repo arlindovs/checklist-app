@@ -11,6 +11,12 @@ export class CategoryEditComponent implements OnInit {
   public editableCategory!: Category;
   public actionName: string = 'Editar';
 
+  /**
+   * Componente responsável por editar uma categoria.
+   * @constructor
+   * @param {MatDialogRef<CategoryEditComponent>} dialogRef - Referência ao diálogo aberto.
+   * @param {any} dialogData - Dados passados para o diálogo.
+   */
   constructor(
     private dialogRef: MatDialogRef<CategoryEditComponent>,
     @Inject(MAT_DIALOG_DATA) dialogData: any
@@ -18,16 +24,18 @@ export class CategoryEditComponent implements OnInit {
     if (dialogData.editableCategory != null) {
       this.editableCategory = dialogData.editableCategory;
     }
-    if(dialogData.actionName != null){
+    if (dialogData.actionName != null) {
       this.actionName = dialogData.actionName;
     }
   }
 
   ngOnInit(): void {}
 
-  public closeModalWindow($event: any){
-    if($event != null) this.dialogRef.close($event);
+  /**
+   * Fecha a janela modal.
+   * @param $event - O evento que acionou o fechamento da janela modal.
+   */
+  public closeModalWindow($event: any) {
+    if ($event != null) this.dialogRef.close($event);
   }
-
 }
-

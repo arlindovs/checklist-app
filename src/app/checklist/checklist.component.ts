@@ -12,6 +12,9 @@ import { SnackBarService } from '../service/snack-bar.service';
   styleUrls: ['./checklist.component.css'],
 })
 export class ChecklistComponent implements OnInit {
+  /**
+   * Colunas exibidas na tabela de itens do checklist.
+   */
   public displayedColumns: string[] = [
     'id',
     'complete',
@@ -22,14 +25,27 @@ export class ChecklistComponent implements OnInit {
     'actions',
   ];
 
+  /**
+   * Fonte de dados da tabela de itens do checklist.
+   */
   public dataSource: ChecklistItem[] = [];
 
+  /**
+   * Construtor da classe.
+   * @param dialog Serviço de diálogo do Angular Material.
+   * @param checklistService Serviço responsável por gerenciar os itens do checklist.
+   * @param snackBarService Serviço responsável por exibir mensagens de feedback ao usuário.
+   */
   constructor(
     private dialog: MatDialog,
     private checklistService: ChecklistService,
     private snackBarService: SnackBarService
   ) {}
 
+  /**
+   * Método executado ao inicializar o componente.
+   * Recupera todos os itens do checklist e atualiza a fonte de dados da tabela.
+   */
   ngOnInit(): void {
     this.checklistService
       .getAllChecklist()
@@ -38,10 +54,18 @@ export class ChecklistComponent implements OnInit {
       });
   }
 
+  /**
+   * Atualiza o status de conclusão de todos os itens do checklist.
+   * @param status Novo status de conclusão dos itens.
+   */
   public updateCompleteStatus(status: boolean) {
     console.log('Status criado', status);
   }
 
+  /**
+   * Abre o diálogo para criar um novo item do checklist.
+   * Exibe uma mensagem de feedback ao usuário após a criação do item.
+   */
   public createNewItem() {
     console.log('Criar novo item clicado!');
 
@@ -60,6 +84,11 @@ export class ChecklistComponent implements OnInit {
       });
   }
 
+  /**
+   * Abre o diálogo para editar um item do checklist.
+   * Exibe uma mensagem de feedback ao usuário após a edição do item.
+   * @param checklistItem Item do checklist a ser editado.
+   */
   public updateChecklistItem(checklistItem: ChecklistItem) {
     console.log('atualizado item do checklist!');
 
@@ -78,6 +107,11 @@ export class ChecklistComponent implements OnInit {
       });
   }
 
+  /**
+   * Abre o diálogo para confirmar a exclusão de um item do checklist.
+   * Exibe uma mensagem de feedback ao usuário após a exclusão do item.
+   * @param checklist Item do checklist a ser excluído.
+   */
   public deleteChecklistItem(checklist: ChecklistItem) {
     console.log('deletado item do checklist!');
 
