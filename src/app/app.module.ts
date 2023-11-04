@@ -21,6 +21,7 @@ import { ChecklistFormComponent } from './checklist-form/checklist-form.componen
 import { LOCALE_ID, NgModule } from '@angular/core';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 registerLocaleData(localePt);
 
 @NgModule({
@@ -40,6 +41,7 @@ registerLocaleData(localePt);
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,

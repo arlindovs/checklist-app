@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ChecklistService } from './ChecklistService';
+import { ChecklistService } from './checklist.service';
 
 describe('ChecklistService', () => {
   let service: ChecklistService;

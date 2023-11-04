@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChecklistItem } from '../_models/checklistItem';
 import { MatDialog } from '@angular/material/dialog';
 import { ChecklistEditComponent } from '../checklist-edit/checklist-edit.component';
-import { ChecklistService } from '../service/ChecklistService';
+import { ChecklistService } from '../service/checklist.service';
 import { SnackBarService } from '../service/snack-bar.service';
 
 @Component({
@@ -48,7 +48,7 @@ export class ChecklistComponent implements OnInit {
    */
   ngOnInit(): void {
     this.checklistService
-      .getAllChecklist()
+      .getAllChecklistItem()
       .subscribe((resp: ChecklistItem[]) => {
         this.dataSource = resp;
       });
