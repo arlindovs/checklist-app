@@ -1,3 +1,4 @@
+import { CategoryService } from './../service/category.service';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {
   FormBuilder,
@@ -6,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Category } from '../_models/category';
+import { SnackBarService } from '../service/snack-bar.service';
 
 @Component({
   selector: 'app-category-form',
@@ -39,7 +41,11 @@ export class CategoryFormComponent implements OnInit {
    */
   public isFormReady = true;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private categoryService: CategoryService,
+    private snackbarService: SnackBarService
+  ) {}
 
   ngOnInit(): void {
     /**
@@ -58,7 +64,6 @@ export class CategoryFormComponent implements OnInit {
    * Cancela a edição da categoria.
    */
   public cancel() {
-    console.log('Cancelar Clicado!');
     this.closeModalEventEmitter.emit(false);
   }
 
@@ -66,7 +71,35 @@ export class CategoryFormComponent implements OnInit {
    * Salva a categoria editada.
    */
   public save() {
-    console.log('Salvar Clicado!');
-    this.closeModalEventEmitter.emit(true);
+
+    if(this.categoryForm.valid){
+
+      if(this.actionName == 'Editar'){
+
+        var updatedCategory = {
+          guid: this.editableCategory.guid,
+          name: this.categoryForm.value['name']
+        }
+
+        this.categoryService.updateCategory(updatedCategory).subscribe((resp: any) => {
+          this.closeModalEventEmitter.emit(true);
+        }, (error: any) => {
+          this.snackbarService.showSnackBar('Erro ao alterar a categoria!', 'OK');
+        });
+      } else {
+        this.categoryService.saveCategory(this.categoryForm.value).subscribe((resp: any) => {
+          this.closeModalEventEmitter.emit(true);
+        }, (error: any) => {
+          this.snackbarService.showSnackBar('Erro ao criar a categoria!', 'OK');
+        });
+      }
+    }
+  }
+
+  /**
+   * Limpa o formulário.
+   */
+  public clearForm() {
+    this.categoryForm.reset();
   }
 }

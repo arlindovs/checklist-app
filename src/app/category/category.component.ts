@@ -38,6 +38,10 @@ export class CategoryComponent implements OnInit {
    * Faz uma chamada ao serviço de categoria para obter todas as categorias e atribui o resultado à propriedade dataSource.
    */
   ngOnInit(): void {
+    this.loadAllCategories();
+  }
+
+  private loadAllCategories() {
     this.categoryService.getAllCaregories().subscribe((resp: Category[]) => {
       this.dataSource = resp;
     });
@@ -49,7 +53,6 @@ export class CategoryComponent implements OnInit {
    * @returns Nenhum valor é retornado, mas uma mensagem de sucesso ou erro é exibida em um snack bar.
    */
   public editCategory(inputCategory: Category) {
-    console.log('edit category clik');
 
     this.dialog
       .open(CategoryEditComponent, {
@@ -61,12 +64,11 @@ export class CategoryComponent implements OnInit {
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
+          this.loadAllCategories();
           this.snackBarService.showSnackBar(
             'Categoria Alterada com sucesso!',
             'OK'
           );
-        } else {
-          this.snackBarService.showSnackBar('Existe erro ao Alterar!', 'OK');
         }
       });
   }
@@ -89,12 +91,20 @@ export class CategoryComponent implements OnInit {
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          this.snackBarService.showSnackBar(
-            'Categoria Apagada com sucesso!',
-            'OK'
-          );
-        } else {
-          this.snackBarService.showSnackBar('Existe erro ao Apagar!', 'OK');
+          this.categoryService.deleteCategory(category.guid).subscribe(
+            (resp: any) => {
+              this.loadAllCategories();
+              this.snackBarService.showSnackBar(
+                'Categoria deletada com sucesso!',
+                'OK'
+              );
+            }, (error: any) => {
+              this.snackBarService.showSnackBar(
+                'Erro ao deletar a categoria! Provavelmente esta sendo Utilizada!',
+                'OK'
+              );
+            }
+          )
         }
       });
   }
@@ -105,7 +115,6 @@ export class CategoryComponent implements OnInit {
    * @returns void
    */
   public createNewCategory() {
-    console.log('Cliquei em Novo!');
 
     this.dialog
       .open(CategoryEditComponent, {
@@ -117,12 +126,11 @@ export class CategoryComponent implements OnInit {
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
+          this.loadAllCategories();
           this.snackBarService.showSnackBar(
             'Categoria Criada com sucesso!',
             'OK'
           );
-        } else {
-          this.snackBarService.showSnackBar('Existe erro ao Criar!', 'OK');
         }
       });
   }
