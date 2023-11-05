@@ -6,7 +6,13 @@
 
     <mat-card-content>
 
-      <table mat-table [dataSource]="dataSource" class="w-100">
+      <mat-card *ngIf="dataSource?.length == 0">
+        <mat-card-content>
+          <p>Nenhum Checklist cadastrado.</p>
+        </mat-card-content>
+      </mat-card>
+
+      <table mat-table *ngIf="dataSource.length > 0" [dataSource]="dataSource" class="w-100">
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
@@ -16,8 +22,8 @@
           <th mat-header-cell *matHeaderCellDef>Completado</th>
           <td mat-cell *matCellDef="let element">
 
-            <mat-icon color="primary" *ngIf="!element.complete" (click)="updateCompleteStatus(true)">thumb_up</mat-icon>
-            <mat-icon color="warn" *ngIf="element.complete" (click)="updateCompleteStatus(false)">thumb_down</mat-icon>
+            <mat-icon color="warn" *ngIf="!element.isCompleted" (click)="updateCompleteStatus(element.guid, true)">thumb_down</mat-icon>
+            <mat-icon color="primary" *ngIf="element.isCompleted" (click)="updateCompleteStatus(element.guid, false)">thumb_up</mat-icon>
 
           </td>
         </ng-container>
@@ -39,7 +45,7 @@
 
         <ng-container matColumnDef="category">
           <th mat-header-cell *matHeaderCellDef>Categoria</th>
-          <td mat-cell *matCellDef="let element">{{ element.category?.name }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.category.name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="actions">

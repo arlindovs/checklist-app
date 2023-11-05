@@ -21,7 +21,7 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Categoria</mat-label>
-            <mat-select formControlName="category">
+            <mat-select formControlName="category" [compareWith]="compareCategories">
               <mat-option *ngFor="let category of categories" [value]="category">{{ category.name }}</mat-option>
             </mat-select>
             <mat-error *ngIf="checklistForm?.controls?.['category']">
@@ -31,7 +31,7 @@
 
           <div class="flx-row flx-evly">
             <section>
-              <mat-checkbox formControlName="complete">Completo?</mat-checkbox>
+              <mat-checkbox formControlName="isCompleted">Completo?</mat-checkbox>
             </section>
             <br>
 

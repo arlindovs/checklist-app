@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ChecklistItem } from '../_models/checklistItem';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -25,5 +25,9 @@ export class ChecklistService {
 
   public deleteChecklistItem(guid: string): Observable<void> {
     return this.httpClient.delete<void>(`${environment.apiBaseEndpointUrl}checklist-items/${guid}`);
+  }
+
+  public updateCompleteStatus(guid: string, status: boolean) : Observable<void> {
+    return this.httpClient.patch<void>(`${environment.apiBaseEndpointUrl}checklist-items/${guid}`, {isComplete: status});
   }
 }

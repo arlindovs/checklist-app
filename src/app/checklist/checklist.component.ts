@@ -47,19 +47,32 @@ export class ChecklistComponent implements OnInit {
    * Recupera todos os itens do checklist e atualiza a fonte de dados da tabela.
    */
   ngOnInit(): void {
+    this.loadAllItems();
+  }
+
+  private loadAllItems() {
     this.checklistService
       .getAllChecklistItem()
       .subscribe((resp: ChecklistItem[]) => {
         this.dataSource = resp;
-      });
+      },  (error: any) => {
+        console.log(`Ocorreu um erro ao chamar a API: ${error}`);
+    });
   }
 
   /**
    * Atualiza o status de conclusão de todos os itens do checklist.
    * @param status Novo status de conclusão dos itens.
    */
-  public updateCompleteStatus(status: boolean) {
-    console.log('Status criado', status);
+  public updateCompleteStatus(guid: string, status: boolean) {
+    this.checklistService.updateCompleteStatus(guid, status).subscribe(
+      (resp: any) => {
+        this.snackBarService.showSnackBar('Status atualizado com sucesso!', 'OK');
+        this.loadAllItems();
+      },(error: any) => {
+        this.snackBarService.showSnackBar('Erro ao atualizar status!', 'OK');
+      }
+    );
   }
 
   /**
@@ -67,8 +80,6 @@ export class ChecklistComponent implements OnInit {
    * Exibe uma mensagem de feedback ao usuário após a criação do item.
    */
   public createNewItem() {
-    console.log('Criar novo item clicado!');
-
     this.dialog
       .open(ChecklistEditComponent, {
         disableClose: true,
@@ -77,9 +88,7 @@ export class ChecklistComponent implements OnInit {
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          this.snackBarService.showSnackBar('Item Criado com sucesso!', 'OK');
-        } else {
-          this.snackBarService.showSnackBar('Existe erro ao Criar!', 'OK');
+          this.loadAllItems();
         }
       });
   }
@@ -90,19 +99,16 @@ export class ChecklistComponent implements OnInit {
    * @param checklistItem Item do checklist a ser editado.
    */
   public updateChecklistItem(checklistItem: ChecklistItem) {
-    console.log('atualizado item do checklist!');
-
     this.dialog
       .open(ChecklistEditComponent, {
         disableClose: true,
-        data: { updateChecklistItem: checklistItem, actionName: 'Editar' },
+      data: { updateChecklistItem: checklistItem/*, actionName: 'Editar'*/ },
       })
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          this.snackBarService.showSnackBar('Item Editado com sucesso!', 'OK');
-        } else {
-          this.snackBarService.showSnackBar('Existe erro ao Editar!', 'OK');
+          this.loadAllItems();
+          this.snackBarService.showSnackBar('Item atualizado com sucesso!', 'OK');
         }
       });
   }
@@ -113,8 +119,6 @@ export class ChecklistComponent implements OnInit {
    * @param checklist Item do checklist a ser excluído.
    */
   public deleteChecklistItem(checklist: ChecklistItem) {
-    console.log('deletado item do checklist!');
-
     this.dialog
       .open(DialogComponent, {
         disableClose: true,
@@ -127,9 +131,15 @@ export class ChecklistComponent implements OnInit {
       .afterClosed()
       .subscribe((resp) => {
         if (resp) {
-          this.snackBarService.showSnackBar('Item Apagado com sucesso!', 'OK');
-        } else {
-          this.snackBarService.showSnackBar('Existe erro ao Apagar!', 'OK');
+
+          this.checklistService.deleteChecklistItem(checklist.guid).subscribe(
+            (resp: any) => {
+              this.loadAllItems();
+              this.snackBarService.showSnackBar('Item Apagado com sucesso!', 'OK');
+            },(error: any) => {
+              this.snackBarService.showSnackBar('Erro ao apagar item!', 'OK');
+            }
+          )
         }
       });
   }

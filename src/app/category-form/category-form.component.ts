@@ -9,6 +9,14 @@ import {
 import { Category } from '../_models/category';
 import { SnackBarService } from '../service/snack-bar.service';
 
+/**
+ * Componente responsável por exibir um formulário para criação ou edição de uma categoria.
+ *
+ * @remarks
+ * Este componente recebe como entrada uma ação a ser exibida no botão de salvar, um objeto de categoria para edição e emite um evento quando o modal é fechado.
+ *
+ * @packageDocumentation
+ */
 @Component({
   selector: 'app-category-form',
   templateUrl: './category-form.component.html',
@@ -18,7 +26,7 @@ export class CategoryFormComponent implements OnInit {
   /**
    * Nome da ação que será exibido no botão de salvar.
    */
-  @Input() public actionName = 'Editar Categoria';
+  @Input() public actionName = 'Editar';
 
   /**
    * Formulário de categoria.

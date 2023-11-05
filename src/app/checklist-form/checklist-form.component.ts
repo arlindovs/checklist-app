@@ -1,3 +1,4 @@
+import { SnackBarService } from './../service/snack-bar.service';
 import {
   FormGroup,
   FormBuilder,
@@ -15,7 +16,11 @@ import {
 } from '@angular/core';
 import { Category } from '../_models/category';
 import { CategoryService } from '../service/category.service';
+import { ChecklistService } from '../service/checklist.service';
 
+/**
+ * Componente responsável por exibir e gerenciar o formulário de edição de um item de checklist.
+ */
 @Component({
   selector: 'app-checklist-form',
   templateUrl: './checklist-form.component.html',
@@ -55,7 +60,9 @@ export class ChecklistFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private checklistService: ChecklistService,
+    private snackBarService: SnackBarService
   ) {}
 
   ngOnInit(): void {
@@ -68,13 +75,19 @@ export class ChecklistFormComponent implements OnInit {
     });
   }
 
+  public compareCategories(categoryOne: Category, categoryTwo: Category): boolean{
+    return (categoryOne != null && categoryTwo != null) &&
+    (categoryOne.guid == categoryTwo.guid) &&
+    (categoryOne.name == categoryTwo.name);
+  }
+
   /**
    * Cria o formulário de edição do item de checklist.
    */
   private createForm() {
     this.checklistForm = this.formBuilder.group({
-      complete: [
-        this.checklistItem != null ? this.checklistItem.complete : false,
+      isCompleted: [
+        this.checklistItem != null ? this.checklistItem.isCompleted : false,
         Validators.required,
       ],
       description: [
@@ -94,12 +107,50 @@ export class ChecklistFormComponent implements OnInit {
     });
   }
 
+  public clearForm() {
+    this.checklistForm.reset();
+  }
+
   /**
    * Emite o evento de fechamento do formulário com sucesso.
    */
   public save() {
+    if(this.checklistForm.valid){
+      if(this.actionName == 'Editar'){
+
+        var updateableItem = {
+          guid: this.checklistItem.guid,
+          description: this.checklistForm.value['description'],
+          isCompleted: this.checklistForm.value['isCompleted'],
+          dateEnd: this.checklistForm.value['dateEnd'],
+          category: this.checklistForm.value['category'],
+          datePost: this.checklistItem.datePost
+
+        }
+
+        this.checklistService.updateChecklistItem(updateableItem).subscribe(
+          (resp: any) => {
+            this.formCloseEvent.emit(true);
+          },(error: any) => {
+            this.snackBarService.showSnackBar('Erro ao atualizar item!', 'OK');
+          }
+        )
+    } else {
+      this.checklistService.saveChecklistItem(this.checklistForm.value).subscribe(
+        (resp: any) => {
+          this.snackBarService.showSnackBar('Item salvo com sucesso!', 'OK');
+          this.formCloseEvent.emit(true);
+        },(error: any) => {
+          this.snackBarService.showSnackBar('Erro ao salvar item!', 'OK');
+        }
+      )
+    }
+
     this.formCloseEvent.emit(true);
+  } else {
+    console.log('Formulário inválido');
   }
+}
 
   /**
    * Emite o evento de fechamento do formulário sem sucesso.

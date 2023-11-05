@@ -1,7 +1,7 @@
 import { Category } from './category';
 
 export class ChecklistItem {
-  public complete!: boolean;
+  public isCompleted!: boolean;
   public description!: string;
   public dateEnd!: Date;
   public datePost!: Date;
